@@ -10,6 +10,8 @@ The contract lets you do the following:
 - Update a student's class
 - Get a student's payment history
 - Remove a student from the system
+- Mark student attendance
+- Toggle student active status
 
 ## Building the Contract
 
@@ -54,7 +56,7 @@ Then deploy the school management contract with the token address:
 stellar contract deploy --wasm target/wasm32v1-none/release/school_management.wasm --network testnet -- --admin <your_address> --token <token_contract_address>
 ```
 
-**Deployed Contract**: `CDYOJNCVLNZUHBAEHYHLLQR4JQMFKX7CQX7M5774YF5HC7HZHXJVLARN`
+**Deployed Contract**: `CASWSFXJJ2EYWWHLMDQPUPWEY3YPE64NQI7M2XNJVZSNZMUM5WPZYB3K`
 **Token Contract Used**: `CBT3JN55CGPJRWQQCQRJWRZ2EJB5K3AHWAJYCOTSXUOS67UTYLTPEHQ3`
 
 ## Project Structure

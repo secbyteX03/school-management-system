@@ -48,6 +48,8 @@ impl SchoolManagement {
             class_name,
             total_paid: 0,
             is_registered: true,
+            is_active: true,
+            attendance_count: 0,
         };
 
         env.storage()
@@ -156,5 +158,29 @@ impl SchoolManagement {
         env.storage()
             .persistent()
             .remove(&DataKey::StudentPayments(student_id));
+    }
+
+    pub fn mark_attendance(env: &Env, student_id: u64) {
+        let mut student: StudentDetails = Self::get_student(env, student_id);
+
+        student.wallet_address.require_auth();
+
+        student.attendance_count += 1;
+
+        env.storage()
+            .persistent()
+            .set(&DataKey::Student(student_id), &student);
+    }
+
+    pub fn toggle_student_status(env: &Env, student_id: u64) {
+        let mut student: StudentDetails = Self::get_student(env, student_id);
+
+        student.wallet_address.require_auth();
+
+        student.is_active = !student.is_active;
+
+        env.storage()
+            .persistent()
+            .set(&DataKey::Student(student_id), &student);
     }
 }

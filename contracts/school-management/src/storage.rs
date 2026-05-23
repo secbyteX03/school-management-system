@@ -9,6 +9,8 @@ pub struct StudentDetails {
     pub class_name: Class,
     pub total_paid: i128,
     pub is_registered: bool,
+    pub is_active: bool,
+    pub attendance_count: u32,
 }
 
 #[derive(Clone)]

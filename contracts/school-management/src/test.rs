@@ -199,3 +199,60 @@ fn test_remove_student() {
 
     assert!(result.is_err());
 }
+
+#[test]
+fn test_mark_attendance() {
+    let setup_result = setup();
+
+    let name = String::from_str(&setup_result.env, "Sib");
+
+    let class_name = Class::College;
+
+    setup_result
+        .client
+        .register_student(&setup_result.student_wallet, &name, &class_name);
+
+    let student_id = 1;
+
+    // Mark attendance
+    setup_result.client.mark_attendance(&student_id);
+
+    let student = setup_result.client.get_student(&student_id);
+    assert_eq!(student.attendance_count, 1);
+
+    // Mark attendance again
+    setup_result.client.mark_attendance(&student_id);
+
+    let student = setup_result.client.get_student(&student_id);
+    assert_eq!(student.attendance_count, 2);
+}
+
+#[test]
+fn test_toggle_student_status() {
+    let setup_result = setup();
+
+    let name = String::from_str(&setup_result.env, "Sib");
+
+    let class_name = Class::College;
+
+    setup_result
+        .client
+        .register_student(&setup_result.student_wallet, &name, &class_name);
+
+    let student_id = 1;
+
+    let student = setup_result.client.get_student(&student_id);
+    assert_eq!(student.is_active, true);
+
+    // Toggle status
+    setup_result.client.toggle_student_status(&student_id);
+
+    let student = setup_result.client.get_student(&student_id);
+    assert_eq!(student.is_active, false);
+
+    // Toggle status again
+    setup_result.client.toggle_student_status(&student_id);
+
+    let student = setup_result.client.get_student(&student_id);
+    assert_eq!(student.is_active, true);
+}
